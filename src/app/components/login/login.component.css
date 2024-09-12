@@ -1,0 +1,92 @@
+body {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  .card {
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    background: #fff;
+  }
+
+  .card-body {
+    padding: 2rem;
+  }
+
+  .card-title {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-control {
+    border-radius: 0.5rem;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-primary {
+    background-color: #2575fc;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .btn-primary:hover {
+    background-color: #1e61d2;
+  }
+
+  .alert {
+    border-radius: 0.5rem;
+  }
+
+  .social-icons {
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .social-icons i {
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+    color: #333;
+    transition: color 0.3s;
+  }
+
+  .social-icons i:hover {
+    color: #2575fc;
+  }
+
+  .input-group-text {
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 0.5rem 0 0 0.5rem;
+  }
+
+  .input-group {
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  .btn-register {
+    background-color: #28a745;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    font-size: 1rem;
+    color: #fff;
+  }
+
+  .btn-register:hover {
+    background-color: #218838;
+  }
+
+  .mt-4 {
+    margin-top: 1.5rem;
+  }

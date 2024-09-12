@@ -1,0 +1,65 @@
+/* Genel stil ayarları */
+.container {
+  max-width: 1200px;
+}
+
+/* Chart'lar için stil ayarları */
+#barChart,
+#pieChart {
+  max-width: 600px;
+  margin: auto;
+}
+
+/* Card stil ayarları */
+.card {
+  border-radius: 0.75rem;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Tablo stil ayarları */
+.table {
+  margin-bottom: 0;
+}
+
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f2f2f2;
+}
+
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #dee2e6;
+}
+
+/* Headline stil ayarları */
+h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 2rem;
+  font-weight: 600;
+}

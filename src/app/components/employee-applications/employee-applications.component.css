@@ -1,0 +1,38 @@
+/* styles.css veya component-specific css */
+.table {
+    font-size: 14px;
+  }
+  
+  .table th, .table td {
+    vertical-align: middle;
+  }
+  
+  .badge-success {
+    background-color: #28a745;
+  }
+  
+  .badge-secondary {
+    background-color: #6c757d;
+  }
+  
+  .text-warning {
+    color: #ffc107;
+  }
+  
+  .text-success {
+    color: #28a745;
+  }
+  
+  .btn-sm {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .btn {
+    border-radius: 0.25rem;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  

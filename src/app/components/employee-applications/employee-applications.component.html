@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <h2 class="mb-4 text-center text-primary">Hesap Başvuruları</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th>Yaş</th>
+          <th>Aylık Gelir</th>
+          <th>Hesap Türü</th>
+          <th>Durum</th>
+          <th>İşlemler</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let application of applications">
+          <td>{{ application.age }}</td>
+          <td>{{ application.monthlyIncome | currency:'TRY':true }}</td>
+          <td>
+            <span [ngClass]="{'badge badge-success': application.isVadeli, 'badge badge-secondary': !application.isVadeli}">
+              {{ application.isVadeli ? 'Vadeli' : 'Vadesiz' }}
+            </span>
+          </td>
+          <td>
+            <span [ngClass]="{'text-warning': application.pending, 'text-success': !application.pending}">
+              {{ application.pending ? 'Beklemede' : 'Onaylandı' }}
+            </span>
+          </td>
+          <td>
+            <button (click)="acceptApplication(application.id)" class="btn btn-success btn-sm">
+              <i class="fas fa-check"></i> Onayla
+            </button>
+            <button (click)="rejectApplication(application.id)" class="btn btn-danger btn-sm ml-2">
+              <i class="fas fa-times"></i> Reddet
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

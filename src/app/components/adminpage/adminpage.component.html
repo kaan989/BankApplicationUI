@@ -1,0 +1,71 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Dashboard</h2>
+
+  <!-- Bar Chart ve Pie Chart -->
+  <div class="row mb-5">
+    <div class="col-lg-4 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Hesap Türleri</h5>
+        </div>
+        <div class="card-body">
+          <canvas id="barChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Bakiye Dağılımı</h5>
+        </div>
+        <div class="card-body">
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Başvuru Durumları</h5>
+        </div>
+        <div class="card-body">
+          <canvas id="applicationPieChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toplam Para Tablosu -->
+  <div class="mt-5">
+    <h3 class="text-center mb-4">Toplam Para Bilgileri</h3>
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Genel Bilgiler</h5>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Toplam Kişi Sayısı</th>
+              <th>Toplam Para</th>
+              <th>Vadeli Hesap Sayısı</th>
+              <th>Vadesiz Hesap Sayısı</th>
+              <th>Onaylı Başvuru Sayısı</th>
+              <th>Reddedilmiş Başvuru Sayısı</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ dashboardData.userCount }}</td>
+              <td>{{ dashboardData.totalBalance | currency:'TRY':'symbol':'1.0-2' }}</td>
+              <td>{{ dashboardData.fixedAccounts }}</td>
+              <td>{{ dashboardData.currentAccounts }}</td>
+              <td>{{ dashboardData.approvedApplications }}</td>
+              <td>{{ dashboardData.rejectedApplications }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="container mt-5">
+    <h2 class="mb-4 text-center"><i class="fas fa-exchange-alt"></i> Para Transferi</h2>
+  
+    <!-- Seçim Ekranı -->
+    <div *ngIf="!isTransferTypeSelected">
+      <div class="form-group text-center">
+        <button (click)="selectTransferType('internal')" class="btn btn-info mx-2">
+          <i class="fas fa-exchange-alt"></i> Hesaplar Arası Transfer
+        </button>
+        <button (click)="selectTransferType('external')" class="btn btn-info mx-2">
+          <i class="fas fa-external-link-alt"></i> Başka Hesaba Transfer
+        </button>
+      </div>
+    </div>
+  
+    <!-- Para Transferi Formu -->
+    <form *ngIf="isTransferTypeSelected" (ngSubmit)="transfer()" #transferForm="ngForm">
+      <div class="form-group">
+        <label for="fromAccount">
+          <i class="fas fa-wallet"></i> Gönderen Hesap:
+        </label>
+        <select id="fromAccount" [(ngModel)]="fromAccountId" name="fromAccount" class="form-control" required>
+          <option *ngFor="let account of accounts" [value]="account.id">
+            {{ getAccountTypeName(account.type) }} - {{ account.balance | currency:'TRY':'symbol' }}
+          </option>
+        </select>
+      </div>
+  
+      <div class="form-group" *ngIf="transferType === 'internal'">
+        <label for="toAccount">
+          <i class="fas fa-wallet"></i> Alıcı Hesap:
+        </label>
+        <select id="toAccount" [(ngModel)]="toAccountNumber" name="toAccount" class="form-control" required>
+          <option *ngFor="let account of accounts" [value]="account.accountNumber">
+            {{ getAccountTypeName(account.type) }} - {{ account.balance | currency:'TRY':'symbol' }}
+          </option>
+        </select>
+      </div>
+  
+      <div class="form-group" *ngIf="transferType === 'external'">
+        <label for="toAccountNumber">
+          <i class="fas fa-wallet"></i> Alıcı Hesap Numarası:
+        </label>
+        <input id="toAccountNumber" type="text" [(ngModel)]="toAccountNumber" name="toAccountNumber" class="form-control" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="amount">
+          <i class="fas fa-dollar-sign"></i> Tutar:
+        </label>
+        <input id="amount" type="number" [(ngModel)]="amount" name="amount" class="form-control" required />
+      </div>
+  
+      <button type="submit" class="btn btn-primary btn-block">
+        <i class="fas fa-paper-plane"></i> Transfer
+      </button>
+    </form>
+  </div>
+  

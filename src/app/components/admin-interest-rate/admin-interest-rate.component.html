@@ -1,0 +1,46 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Faiz Oranı Yönetimi</h2>
+  
+    <form (ngSubmit)="selectedRate.id ? updateRate(selectedRate) : addRate(rateForm.value)" #rateForm="ngForm">
+      <div class="form-group">
+        <label for="rate">Faiz Oranı (%)</label>
+        <input type="number" id="rate" name="rate" class="form-control" [(ngModel)]="selectedRate.rate" required />
+      </div>
+      <div class="form-group">
+        <label for="effectiveFrom">Geçerli Tarih</label>
+        <input type="date" id="effectiveFrom" name="effectiveFrom" class="form-control" [(ngModel)]="selectedRate.effectiveFrom" required />
+      </div>
+      <div class="form-group">
+        <label for="effectiveTo">Sona Erme Tarihi (Opsiyonel)</label>
+        <input type="date" id="effectiveTo" name="effectiveTo" class="form-control" [(ngModel)]="selectedRate.effectiveTo" />
+      </div>
+      <button type="submit" class="btn btn-primary">{{ selectedRate.id ? 'Güncelle' : 'Ekle' }}</button>
+      <button type="button" class="btn btn-secondary" (click)="resetForm()">İptal</button>
+    </form>
+  
+    <div class="mt-5">
+      <h3 class="mb-3">Mevcut Faiz Oranları</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Faiz Oranı (%)</th>
+            <th>Geçerli Tarih</th>
+            <th>Sona Erme Tarihi</th>
+            <th>İşlemler</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rate of rates">
+            <td>{{ rate.rate }}</td>
+            <td>{{ rate.effectiveFrom | date }}</td>
+            <td>{{ rate.effectiveTo ? (rate.effectiveTo | date) : 'Yok' }}</td>
+            <td>
+              <button class="btn btn-info btn-sm" (click)="selectRate(rate)">Düzenle</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteRate(rate.id!)">Sil</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

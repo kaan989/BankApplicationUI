@@ -1,0 +1,67 @@
+/* src/app/account-application/account-application.component.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+  }
+  
+  .container {
+    margin-top: 50px;
+  }
+  
+  h1 {
+    color: #00aaff;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .form-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-group label {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .form-group label i {
+    font-size: 1.2rem;
+    color: #00aaff;
+    margin-right: 10px;
+  }
+  
+  .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    color: #495057;
+  }
+  
+  .form-control:focus {
+    border-color: #00aaff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 170, 255, 0.25);
+  }
+  
+  .form-check-label {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .btn-primary {
+    background-color: #00aaff;
+    border-color: #00aaff;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0099cc;
+    border-color: #0099cc;
+  }
+  

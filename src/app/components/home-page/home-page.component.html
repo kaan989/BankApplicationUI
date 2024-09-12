@@ -1,0 +1,46 @@
+<div class="container mt-5">
+  <h1 class="text-center mb-4">
+    <i class="fas fa-university"></i> Welcome to Your Bank
+  </h1>
+
+  <!-- Vadeli Hesaplar Bölümü -->
+  <div class="account-section mb-5">
+    <h2>
+      <i class="fas fa-piggy-bank"></i> Vadeli Hesaplar
+    </h2>
+    <ul class="account-list">
+      <li *ngIf="vadeliAccounts.length === 0">Hesabınız bulunmamaktadır.</li>
+      <li *ngFor="let account of vadeliAccounts">
+        <div class="account-details">
+          <i class="fas fa-money-check-alt"></i>
+          <span>Hesap No: {{ account.accountNumber }}</span>
+        </div>
+        <span class="balance">{{ account.balance | currency:'TRY':'symbol' }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Vadesiz Hesaplar Bölümü -->
+  <div class="account-section">
+    <h2>
+      <i class="fas fa-wallet"></i> Vadesiz Hesaplar
+    </h2>
+    <ul class="account-list">
+      <li *ngIf="vadesizAccounts.length === 0">Hesabınız bulunmamaktadır.</li>
+      <li *ngFor="let account of vadesizAccounts">
+        <div class="account-details">
+          <i class="fas fa-credit-card"></i>
+          <span>Hesap No: {{ account.accountNumber }}</span>
+        </div>
+        <span class="balance">{{ account.balance | currency:'TRY':'symbol' }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Genel Başvuru Butonu -->
+  <div class="text-center mt-4">
+    <button (click)="openApplicationForm()" class="btn btn-primary">
+      <i class="fas fa-file-alt"></i> Hesap Başvurusu Yap
+    </button>
+  </div>
+</div>
