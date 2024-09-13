@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./adminpage.component.css']
 })
 export class AdminpageComponent implements OnInit {
+  isAdmin: boolean = false;
+  errorMessage: string = '';
   dashboardData: any = {};
   private barChart: Chart<'bar'> | undefined;
   private pieChart: Chart<'pie'> | undefined;
@@ -22,6 +24,7 @@ export class AdminpageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkUserRole();
     this.loadDashboardData();
   }
 
@@ -112,4 +115,30 @@ export class AdminpageComponent implements OnInit {
       }
     });
   }
+
+  checkUserRole(): void {
+    const roleString = localStorage.getItem('roles');
+    if (roleString) {
+      try {
+        // JSON'u çözümleyin
+        const roles = JSON.parse(roleString);
+  
+        // Dizinin `admin` rolünü içerip içermediğini kontrol edin
+        if (roles.includes('admin')) {
+          this.isAdmin = true;
+        } else {
+          this.isAdmin = false;
+          this.errorMessage = 'Bu sayfayı görüntüleme izniniz yok.';
+        }
+      } catch (e) {
+        this.isAdmin = false;
+        this.errorMessage = 'Kullanıcı rolü verisi geçersiz.';
+        console.error('JSON çözümleme hatası:', e);
+      }
+    } else {
+      this.isAdmin = false;
+      this.errorMessage = 'Kullanıcı rolü bulunamadı.';
+    }
+  }
+  
 }

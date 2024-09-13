@@ -13,11 +13,14 @@ import Swal from 'sweetalert2';
   styleUrl: './account-application.component.css'
 })
 export class AccountApplicationComponent implements OnInit {
+  isUser: boolean = false;
+  errorMessage: string = '';
   applicationForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private accountAppService: AccountApplicationService) { }
 
   ngOnInit(): void {
+    this.checkUserRole();
     const appUserId = localStorage.getItem('userId') || '';
 
     this.applicationForm = this.fb.group({
@@ -67,4 +70,31 @@ export class AccountApplicationComponent implements OnInit {
       });
     }
   }
+
+  checkUserRole(): void {
+    const roleString = localStorage.getItem('roles');
+    if (roleString) {
+      try {
+        // JSON'u çözümleyin
+        const roles = JSON.parse(roleString);
+  
+        // Dizinin `admin` rolünü içerip içermediğini kontrol edin
+        if (roles.includes('user')) {
+          this.isUser = true;
+        } else {
+          this.isUser = false;
+          this.errorMessage = 'Bu sayfayı görüntüleme izniniz yok.';
+        }
+      } catch (e) {
+        this.isUser = false;
+        this.errorMessage = 'Kullanıcı rolü verisi geçersiz.';
+        console.error('JSON çözümleme hatası:', e);
+      }
+    } else {
+      this.isUser = false;
+      this.errorMessage = 'Kullanıcı rolü bulunamadı.';
+    }
+  }
+
+  
 }

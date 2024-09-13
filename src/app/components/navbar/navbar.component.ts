@@ -55,4 +55,8 @@ export class NavbarComponent {
   onTransfer(){
     this.router.navigate(['/transfer']);
   }
+
+  onInterestRate(){
+    this.router.navigate(['interestRate']);
+  }
 }

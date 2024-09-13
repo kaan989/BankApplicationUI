@@ -18,6 +18,8 @@ import { AccountService } from '../../services/account.service';
   styleUrls: ['./create-account.component.css'] // Corrected 'styleUrls'
 })
 export class CreateAccountComponent implements OnInit {
+  isCustomer: boolean = false;
+  errorMessage: string = '';
   application: any = {};
   account: Account = {
     id: 0,
@@ -45,6 +47,7 @@ export class CreateAccountComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.checkUserRole();
     const id = +this.route.snapshot.paramMap.get('id')!;
     this.appService.getApplicationById(id).subscribe(application => {
       this.application = application;
@@ -52,7 +55,7 @@ export class CreateAccountComponent implements OnInit {
   }
 
   createAccount(): void {
-    debugger;
+
     const userId = this.application.appUserId; 
     const type = this.account.type;
     if (userId) {
@@ -84,7 +87,6 @@ export class CreateAccountComponent implements OnInit {
     if (userId) {
       this.appUserService.getUserById(userId).subscribe(
         (user: AppUser) => {
-          console.log('User Info:', user);
           this.application.firstName = user.firstName || '';
           this.application.lastName = user.lastName || '';
           this.application.idNumber = user.idNumber || '';
@@ -96,6 +98,31 @@ export class CreateAccountComponent implements OnInit {
       );
     } else {
       console.warn('User ID is required to fetch user info');
+    }
+  }
+
+  checkUserRole(): void {
+    const roleString = localStorage.getItem('roles');
+    if (roleString) {
+      try {
+        // JSON'u çözümleyin
+        const roles = JSON.parse(roleString);
+  
+        // Dizinin `admin` rolünü içerip içermediğini kontrol edin
+        if (roles.includes('customer')) {
+          this.isCustomer = true;
+        } else {
+          this.isCustomer = false;
+          this.errorMessage = 'Bu sayfayı görüntüleme izniniz yok.';
+        }
+      } catch (e) {
+        this.isCustomer = false;
+        this.errorMessage = 'Kullanıcı rolü verisi geçersiz.';
+        console.error('JSON çözümleme hatası:', e);
+      }
+    } else {
+      this.isCustomer = false;
+      this.errorMessage = 'Kullanıcı rolü bulunamadı.';
     }
   }
 }

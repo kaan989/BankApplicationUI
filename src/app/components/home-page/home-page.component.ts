@@ -13,12 +13,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
+  isUser: boolean = false;
+  errorMessage: string = '';
   vadeliAccounts: Account[] = [];
   vadesizAccounts: Account[] = [];
 
   constructor(private accountService: AccountService, private router: Router) { }
 
   ngOnInit(): void {
+    this.checkUserRole();
     this.loadAccounts();
   }
 
@@ -47,5 +50,30 @@ export class HomePageComponent implements OnInit {
 
   openApplicationForm() {
     this.router.navigate(['/application-form']);
+  }
+
+  checkUserRole(): void {
+    const roleString = localStorage.getItem('roles');
+    if (roleString) {
+      try {
+        // JSON'u çözümleyin
+        const roles = JSON.parse(roleString);
+  
+        // Dizinin `admin` rolünü içerip içermediğini kontrol edin
+        if (roles.includes('user')) {
+          this.isUser = true;
+        } else {
+          this.isUser = false;
+          this.errorMessage = 'Bu sayfayı görüntüleme izniniz yok.';
+        }
+      } catch (e) {
+        this.isUser = false;
+        this.errorMessage = 'Kullanıcı rolü verisi geçersiz.';
+        console.error('JSON çözümleme hatası:', e);
+      }
+    } else {
+      this.isUser = false;
+      this.errorMessage = 'Kullanıcı rolü bulunamadı.';
+    }
   }
 }

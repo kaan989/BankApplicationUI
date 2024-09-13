@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5" *ngIf="isAdmin">
     <h2 class="text-center mb-4">Faiz Oranı Yönetimi</h2>
   
     <form (ngSubmit)="selectedRate.id ? updateRate(selectedRate) : addRate(rateForm.value)" #rateForm="ngForm">
@@ -44,3 +44,6 @@
     </div>
   </div>
   
+  <div class="container mt-5" *ngIf="!isAdmin">
+    <p class="text-center text-danger">Bu sayfayı görüntüleme izniniz yok.</p>
+  </div>

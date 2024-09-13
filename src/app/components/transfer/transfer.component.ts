@@ -59,42 +59,60 @@ export class TransferComponent implements OnInit {
   }
 
   transfer(): void {
+    debugger;
     if (this.fromAccountId && this.amount) {
+      const fromAccount = this.accounts.find(accounts => accounts.id === this.fromAccountId);
+
+      
+  
+      if (fromAccount && fromAccount.balance < this.amount) {
+        Swal.fire({
+          title: 'Hata!',
+          text: 'Gönderen hesapta yeterli bakiye bulunmuyor.',
+          icon: 'error',
+          confirmButtonText: 'Tamam'
+        });
+        return;
+      }
+  
       const transferDto: TransferDto = {
         fromAccountId: this.fromAccountId,
         toAccountNumber: this.transferType === 'internal' ? this.toAccountNumber : this.toAccountNumber,
         amount: this.amount
       };
-
+  
       this.transactionService.transfer(transferDto).subscribe(
         response => {
           Swal.fire({
-            title: 'Success!',
-            text: 'Transfer successful',
+            title: 'Başarılı!',
+            text: 'Transfer işlemi başarılı.',
             icon: 'success',
-            confirmButtonText: 'OK'
+            confirmButtonText: 'Tamam'
           });
           // Başarı mesajı ve hesapları yenile
           this.loadAccounts();
         },
         error => {
+          // Hata mesajını detaylı gösterme
           Swal.fire({
-            title: 'Error!',
-            text: 'Transfer failed: ' + error.message,
+            title: 'Hata!',
+            text: `Transfer işlemi başarısız: ${error.error.message || error.message}`,
             icon: 'error',
-            confirmButtonText: 'OK'
+            confirmButtonText: 'Tamam'
           });
         }
       );
     } else {
       Swal.fire({
-        title: 'Warning!',
-        text: 'Please fill in all fields',
+        title: 'Uyarı!',
+        text: 'Lütfen tüm alanları doldurunuz.',
         icon: 'warning',
-        confirmButtonText: 'OK'
+        confirmButtonText: 'Tamam'
       });
     }
   }
+  
+  
 
   // Hesap türünü anlamlı bir metne dönüştürür
   getAccountTypeName(type: number): string {

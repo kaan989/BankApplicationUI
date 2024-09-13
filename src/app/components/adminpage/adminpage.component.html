@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5" *ngIf="isAdmin">
   <h2 class="text-center mb-4">Dashboard</h2>
 
   <!-- Bar Chart ve Pie Chart -->
@@ -68,4 +68,9 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<div class="container mt-5" *ngIf="!isAdmin">
+  <p class="text-center text-danger">Bu sayfayı görüntüleme izniniz yok.</p>
 </div>

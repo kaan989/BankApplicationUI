@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5" *ngIf="isCustomer">
   <h1 class="text-center"><i class="fas fa-user-plus"></i> Hesap Oluştur</h1>
 
   <!-- Kullanıcı Bilgilerini Getir Bölümü -->
@@ -75,9 +75,9 @@
         </div>
         <div class="form-group">
           <label for="createdAt">Oluşturulma Tarihi</label>
-          <input type="date" class="form-control" id="createdAt" [(ngModel)]="account.createdAt" name="createdAt" required>
+          <input type="date" class="form-control" id="createdAt" [(ngModel)]="account.createdAt" name="createdAt" required hidden>
         </div>
-        <div class="form-group">
+        <div class="form-group" >
           <label for="lastInterestAppliedDate">Son Faiz Uygulama Tarihi (isteğe bağlı)</label>
           <input type="date" class="form-control" id="lastInterestAppliedDate" [(ngModel)]="account.lastInterestAppliedDate" name="lastInterestAppliedDate">
         </div>
@@ -86,4 +86,8 @@
       </form>
     </div>
   </div>
+</div>
+
+<div class="container mt-5" *ngIf="!isCustomer">
+  <p class="text-center text-danger">Bu sayfayı görüntüleme izniniz yok.</p>
 </div>

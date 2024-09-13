@@ -1,32 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountApplication } from '../../Models/AccountApplication.Model';
 import { AccountApplicationService } from '../../services/account-application.service';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
+import { forkJoin } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-admin-allaplications',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './admin-allaplications.component.html',
-  styleUrl: './admin-allaplications.component.css'
+  styleUrls: ['./admin-allaplications.component.css']
 })
 export class AdminAllaplicationsComponent implements OnInit {  
   isAdmin: boolean = false;
   applications: AccountApplication[] = [];
   errorMessage: string = '';
+  users: { [key: string]: any } = {}; 
 
-  constructor(private accountApplicationService: AccountApplicationService, private authService: AuthService) { }
+  constructor(
+    private accountApplicationService: AccountApplicationService,
+    private authService: AuthService
+  ) { }
+
   checkUserRole(): void {
     const roleString = localStorage.getItem('roles');
     if (roleString) {
       try {
-        // JSON'u çözümleyin
         const roles = JSON.parse(roleString);
-  
-        // Dizinin `admin` rolünü içerip içermediğini kontrol edin
         if (roles.includes('admin')) {
           this.isAdmin = true;
           this.getAllApplications();
@@ -44,19 +47,16 @@ export class AdminAllaplicationsComponent implements OnInit {
       this.errorMessage = 'Kullanıcı rolü bulunamadı.';
     }
   }
-  
-
 
   ngOnInit(): void {
     this.checkUserRole();
-    this.getAllApplications();
   }
 
   getAllApplications(): void {
     this.accountApplicationService.getAllApplications().subscribe(
       (data) => {
-        console.log(data);
         this.applications = data;
+        this.loadUsers(); 
       },
       (error) => {
         this.errorMessage = 'Başvurular alınırken hata oluştu.';
@@ -64,7 +64,29 @@ export class AdminAllaplicationsComponent implements OnInit {
       }
     );
   }
+
+  loadUsers(): void {
+    const userIds = [...new Set(this.applications.map(app => app.appUserId))];
+    const userRequests = userIds.map(id => this.authService.getUserById(id));
+    
+    forkJoin(userRequests).subscribe(
+      (users) => {
+        users.forEach(user => {
+          this.users[user.id] = user;
+        });
+      },
+      (error) => {
+        this.errorMessage = 'Kullanıcı bilgileri alınırken hata oluştu.';
+        console.error('Kullanıcı bilgileri alınırken hata:', error);
+      }
+    );
+  }
   
+  getUserFullName(userId: string): string {
+    const user = this.users[userId];
+    return user ? `${user.firstName} ${user.lastName}` : 'Bilinmiyor';
+  }
+
   deleteApplication(id: number): void {
     Swal.fire({
       title: 'Emin misiniz?',
@@ -83,7 +105,7 @@ export class AdminAllaplicationsComponent implements OnInit {
             'Başvuru başarıyla silindi.',
             'success'
           );
-          this.getAllApplications(); // Başvuruları yeniden yükleyin
+          this.getAllApplications(); 
         }, (error) => {
           Swal.fire(
             'Hata!',

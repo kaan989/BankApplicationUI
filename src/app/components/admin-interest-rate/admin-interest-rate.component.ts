@@ -3,6 +3,7 @@ import { InterestRate } from '../../Models/InterestRate.Model';
 import { InterestRateService } from '../../services/interest-rate.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AccountApplication } from '../../Models/AccountApplication.Model';
 
 
 @Component({
@@ -13,6 +14,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './admin-interest-rate.component.css'
 })
 export class AdminInterestRateComponent implements OnInit {
+  isAdmin: boolean = false;
+  errorMessage: string = '';
   rates: InterestRate[] = [];
   selectedRate: InterestRate = {
     rate: 0,
@@ -22,6 +25,7 @@ export class AdminInterestRateComponent implements OnInit {
   constructor(private interestRateService: InterestRateService) { }
 
   ngOnInit(): void {
+    this.checkUserRole();
     this.loadRates();
   }
 
@@ -71,5 +75,30 @@ export class AdminInterestRateComponent implements OnInit {
       rate: 0,
       effectiveFrom: new Date()
     };
+  }
+
+  checkUserRole(): void {
+    const roleString = localStorage.getItem('roles');
+    if (roleString) {
+      try {
+        // JSON'u çözümleyin
+        const roles = JSON.parse(roleString);
+  
+        // Dizinin `admin` rolünü içerip içermediğini kontrol edin
+        if (roles.includes('admin')) {
+          this.isAdmin = true;
+        } else {
+          this.isAdmin = false;
+          this.errorMessage = 'Bu sayfayı görüntüleme izniniz yok.';
+        }
+      } catch (e) {
+        this.isAdmin = false;
+        this.errorMessage = 'Kullanıcı rolü verisi geçersiz.';
+        console.error('JSON çözümleme hatası:', e);
+      }
+    } else {
+      this.isAdmin = false;
+      this.errorMessage = 'Kullanıcı rolü bulunamadı.';
+    }
   }
 }
